@@ -11,3 +11,16 @@ function getParent($categoria){
     }
     return "-";
 }
+
+/**
+ * Permite obtener y descomprimir las URLs de las imágenes
+ *
+ */
+function getUrlImagen($imagen, $tamano){
+    $imagen_array = json_decode(stripslashes($imagen));
+    $url = "";
+    if(isset($imagen_array->$tamano)){
+        $url = url("imagenes". $imagen_array->$tamano);
+    }
+    return $url;
+}
