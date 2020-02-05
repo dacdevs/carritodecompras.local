@@ -33,7 +33,7 @@
                         @foreach($data as $obj)
                             <tr>
                                 <td scope="row">{{ $obj->id }}</td>
-                                <td><a href="{{ getUrlImagen($obj->imagen,"full") }}" target="blank"><img src="{{ getUrlImagen($obj->imagen,"thumb") }}" alt="" width="60"></a></td>
+                                <td><a href="{{ getUrlImagen($obj->imagen,"thumb") }}" target="blank"><img src="{{ getUrlImagen($obj->imagen,"thumb") }}" alt="" width="60"></a></td>
                                 <td>{{ $obj->nombre }}</td>
                                 <td>{{ $obj->categoria->nombre }}</td>
                                 <td>S/{{ number_format($obj->precio,2) }}</td>

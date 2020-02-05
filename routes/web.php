@@ -11,6 +11,8 @@
 |
 */
 
+use Illuminate\Support\Facades\Route;
+
 Route::get("imagenes/{carpeta}/{carpeta2}/{archivo}", function($carpeta1,$carpeta2,$archivo){
     $path = storage_path("app/".$carpeta1."/".$carpeta2."/".$archivo);
     return response()->file($path);
@@ -18,9 +20,7 @@ Route::get("imagenes/{carpeta}/{carpeta2}/{archivo}", function($carpeta1,$carpet
 
 Route::group(['domain' => 'carritodecompras.local'], function () {
 
-    Route::get('/', function () {
-        return view('welcome');
-    });
+    Route::get('/', 'Front\IndexController@getIndex');
 
 });
 

@@ -24,3 +24,27 @@ function getUrlImagen($imagen, $tamano){
     }
     return $url;
 }
+
+/**
+ * Permite validar si una clave de json existe en los productos
+ *
+ */
+function validarJson($data, $clave_json){
+    $json_obj = json_decode(stripslashes($data->filtros));
+    $res = false;
+    if(isset($json_obj->$clave_json)){
+        if($json_obj->$clave_json){
+            $res = true;
+        }else{
+            $res = false;
+        }
+    }
+    return $res;
+}
+
+/**
+ * Obtiene el formato de moneda
+ */
+function getMoneda($precio){
+    return "S/". number_format($precio,2);
+}

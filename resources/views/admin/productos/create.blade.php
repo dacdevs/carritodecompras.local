@@ -33,7 +33,7 @@
                         <select name="categoria" required class="form-control" id="exampleFormControlSelect12">
                             <option value="">-- Selecciona --</option>
                             @foreach ($categorias as $cat)
-                                <option {{ isset($object) && $object->parent_id == $cat->id ? "selected" : "" }} value="{{ $cat->id }}">{{ $cat->nombre }}</option>
+                                <option {{ isset($object) && $object->categoria_id == $cat->id ? "selected" : "" }} value="{{ $cat->id }}">{{ $cat->nombre }}</option>
                             @endforeach
                         </select>
                     </div>
@@ -74,8 +74,60 @@
                     </div>
 
                     <div class="form-group">
-                        <label for="imagen">Imagen principal</small></label>
-                        <input name="imagen" value="{{ isset($object) ? $object->imagen : "" }}" type="file" required class="form-control" id="imagen">
+                        <label for="imagen">Imagen principal</label>
+                        <input name="imagen" value="{{ isset($object) ? $object->imagen : "" }}" type="file" class="form-control" id="imagen">
+                    </div>
+
+                    <div class="form-group">
+                        <label>Filtros adicionales</label>
+
+                        <label class="control control-checkbox">Destacados
+                            <input type="checkbox" name="f_destacado" {{ isset($object) && validarJson($object,"f_destacado") ? "checked" : "" }}/>
+                            <div class="control-indicator"></div>
+                        </label>
+
+                        <label class="control control-checkbox">Populares
+                            <input type="checkbox" name="f_populares" {{ isset($object) && validarJson($object,"f_populares") ? "checked" : "" }}/>
+                            <div class="control-indicator"></div>
+                        </label>
+
+                        <label class="control control-checkbox">Más vendidos
+                            <input type="checkbox" name="f_mas_vendidos" {{ isset($object) && validarJson($object,"f_mas_vendidos") ? "checked" : "" }}/>
+                            <div class="control-indicator"></div>
+                        </label>
+
+                        <label class="control control-checkbox">Nuevos
+                            <input type="checkbox" name="f_nuevos" {{ isset($object) && validarJson($object,"f_nuevos") ? "checked" : "" }} />
+                            <div class="control-indicator"></div>
+                        </label>
+
+                        <label class="control control-checkbox">Oferta del mes
+                            <input type="checkbox" name="f_oferta_mes" {{ isset($object) && validarJson($object,"f_oferta_mes") ? "checked" : "" }} />
+                            <div class="control-indicator"></div>
+                        </label>
+                    </div>
+
+                    <div class="form-group">
+                        <label>Configuración de ofertas</label>
+                        <label class="control control-checkbox">Disponible en oferta
+                            <input id="oferta" type="checkbox" name="oferta" {{ isset($object) && $object->oferta == 1 ? "checked" : "" }} />
+                            <div class="control-indicator"></div>
+                        </label>
+                    </div>
+
+                    <div class="row campos_oferta">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="omn">Precio normal del producto</label>
+                                <input name="omn" value="{{ isset($object) ? $object->omonto_normal : "" }}" type="text" class="form-control" id="precio" placeholder="0.00">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="ofc">Fecha de caducidad de oferta</label>
+                                <input name="ofc" value="{{ isset($object) ? date('Y-m-d',strtotime($object->ofecha_caduca)) : "" }}" type="date" class="form-control" id="cantidad" placeholder="0">
+                            </div>
+                        </div>
                     </div>
 
                     <div class="form-footer pt-4 pt-5 mt-4 border-top">
@@ -86,4 +138,25 @@
         </div>
     </div>
 </div>
+@endsection
+
+@section('scripts')
+<script>
+    $(document).ready(function(){
+        if($("#oferta:checked").length > 0){
+            $(".campos_oferta").show();
+        }else{
+            $(".campos_oferta").hide();
+        }
+        $("#oferta").change(function(){
+            if($("#oferta:checked").length > 0){
+                $(".campos_oferta").show();
+            }else{
+                $(".campos_oferta").hide();
+            }
+
+        });
+
+    });
+</script>
 @endsection

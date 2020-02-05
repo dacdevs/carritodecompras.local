@@ -6,6 +6,9 @@
         .mb10{
             margin-bottom: 10px;
         }
+        label {
+            text-transform: initial!important;
+        }
     </style>
 </head>
 

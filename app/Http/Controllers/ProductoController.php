@@ -35,7 +35,7 @@ class ProductoController extends Controller
 
     public function edit($id,Request $request){
 
-        $this->data["object"] = Categoria::withTrashed()->where("id",$id)->first();
+        $this->data["object"] = Producto::withTrashed()->where("id",$id)->first();
         $this->data["categorias"] = Categoria::all();
 
         if($request->has("accion")){
@@ -84,6 +84,29 @@ class ProductoController extends Controller
         if($request->hasFile("imagen")){
             $object->imagen = $this->uploadImage("foto-producto-". date("dmYHis") , $request->file("imagen"),"/productos/fotos");
         }
+
+        if($request->has("oferta")){
+            $object->oferta = 1;
+
+            if($request->has("omn")){
+                $object->omonto_normal = $request->input("omn");
+            }
+
+            if($request->has("ofc")){
+                $object->ofecha_caduca = $request->input("ofc");
+            }
+        }else{
+            $object->oferta = 0;
+        }
+
+        $dataFiltros = array();
+        $dataFiltros["f_destacado"] = $request->has("f_destacado");
+        $dataFiltros["f_populares"] = $request->has("f_populares");
+        $dataFiltros["f_mas_vendidos"] = $request->has("f_mas_vendidos");
+        $dataFiltros["f_nuevos"] = $request->has("f_nuevos");
+        $dataFiltros["f_oferta_mes"] = $request->has("f_oferta_mes");
+
+        $object->filtros = json_encode($dataFiltros);
 
         if($object->save()){
             return redirect()->route( $this->data["route"] .".index");
